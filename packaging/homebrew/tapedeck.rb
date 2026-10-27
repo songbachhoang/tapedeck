@@ -7,16 +7,17 @@ class Tapedeck < Formula
   url "https://github.com/songbachhoang/tapedeck/archive/refs/tags/v0.2.0.tar.gz"
   sha256 "88704aba05b27ae228dae631d8b3dce8b57f80f21b2932d0b7f2f5a6d6e293a8"
   license "MIT"
+  revision 1
 
   depends_on "deno"
   depends_on "ffmpeg"
-  depends_on "python@3.14"
+  depends_on "python@3.15"
 
   def install
     libexec.install "tapedeck.py", "web"
     (bin/"tapedeck").write <<~SH
       #!/bin/bash
-      exec "#{formula_opt_bin("python@3.14")}/python3.14" "#{libexec}/tapedeck.py" "$@"
+      exec "#{formula_opt_bin("python@3.15")}/python3.15" "#{libexec}/tapedeck.py" "$@"
     SH
   end
 
