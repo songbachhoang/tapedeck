@@ -5,7 +5,7 @@ class Tapedeck < Formula
   desc "Save YouTube audio and video on your Mac, with no ads and nothing uploaded"
   homepage "https://github.com/songbachhoang/tapedeck"
   url "https://github.com/songbachhoang/tapedeck/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "REPLACE_WITH_RELEASE_SHA256"
+  sha256 "88704aba05b27ae228dae631d8b3dce8b57f80f21b2932d0b7f2f5a6d6e293a8"
   license "MIT"
 
   depends_on "deno"
@@ -16,7 +16,7 @@ class Tapedeck < Formula
     libexec.install "tapedeck.py", "web"
     (bin/"tapedeck").write <<~SH
       #!/bin/bash
-      exec "#{Formula["python@3.14"].opt_bin}/python3.14" "#{libexec}/tapedeck.py" "$@"
+      exec "#{formula_opt_bin("python@3.14")}/python3.14" "#{libexec}/tapedeck.py" "$@"
     SH
   end
 
