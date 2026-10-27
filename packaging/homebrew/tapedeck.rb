@@ -23,6 +23,8 @@ class Tapedeck < Formula
   service do
     run [opt_bin/"tapedeck", "--no-browser"]
     keep_alive true
+    # launchd starts services with a bare PATH; ffmpeg and deno live in Homebrew's bin.
+    environment_variables PATH: std_service_path_env
     log_path var/"log/tapedeck.log"
     error_log_path var/"log/tapedeck.log"
   end
