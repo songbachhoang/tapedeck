@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tapedeck · Save YouTube audio and video on your Mac</title>
+<meta name="description" content="Tapedeck saves YouTube audio and video on your Mac in one click. No ads, no pop-ups, nothing uploaded. Free and open source.">
+<link rel="canonical" href="https://songbachhoang.github.io/tapedeck/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://songbachhoang.github.io/tapedeck/">
+<meta property="og:title" content="Tapedeck · Save YouTube audio and video on your Mac">
+<meta property="og:description" content="One click from YouTube. Best quality, playlists you pick from, no ads. Free and open source.">
+<meta property="og:image" content="https://songbachhoang.github.io/tapedeck/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root {
+    --bg: #fbfbfc; --surface: #ffffff; --text: #18181b; --muted: #63636e;
+    --border: #e4e4e8; --accent: #e5484d; --accent-text: #ffffff; --code-bg: #18181b; --code-text: #f4f4f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0f11; --surface: #18181c; --text: #ededf0; --muted: #a0a0ab;
+      --border: #2b2b31; --accent: #ec5d5e; --accent-text: #ffffff; --code-bg: #232329; --code-text: #f4f4f5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; text-decoration: none; }
+  nav a.gh { color: var(--muted); text-decoration: none; font-size: 15px; }
+  nav a.gh:hover { color: var(--text); }
+
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 48px 0 72px; }
+  h1 { font-size: clamp(36px, 5.4vw, 56px); line-height: 1.06; letter-spacing: -0.025em; margin: 0 0 18px; }
+  .lede { font-size: 19px; color: var(--muted); margin: 0 0 28px; max-width: 34em; }
+  .install { background: var(--code-bg); color: var(--code-text); border-radius: 12px; padding: 14px 14px 14px 18px;
+    display: flex; align-items: center; gap: 12px; max-width: 460px; }
+  .hero > * { min-width: 0; }
+  .install code { font: 15px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; }
+  .install code .p { color: #8b8b96; user-select: none; }
+  .copy { font: inherit; font-size: 14px; font-weight: 600; border: 0; border-radius: 8px; padding: 7px 12px;
+    background: var(--accent); color: var(--accent-text); cursor: pointer; flex: none; }
+  .then { color: var(--muted); font-size: 15px; margin: 12px 0 0; }
+  .then code { font: 14px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .shot { border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 24px 60px -24px rgb(0 0 0 / 0.25); width: 100%; height: auto; display: block; }
+
+  section { padding: 56px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 30px; letter-spacing: -0.015em; margin: 0 0 28px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: s; padding: 0; margin: 0; list-style: none; }
+  .steps li { counter-increment: s; }
+  .steps li::before { content: counter(s); display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 99px;
+    background: var(--accent); color: var(--accent-text); font-weight: 700; font-size: 15px; margin-bottom: 10px; }
+  .steps h3 { margin: 0 0 4px; font-size: 18px; }
+  .steps p { margin: 0; color: var(--muted); font-size: 16px; }
+  details { border-bottom: 1px solid var(--border); padding: 16px 0; }
+  details:first-of-type { border-top: 1px solid var(--border); }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { color: var(--muted); margin: 10px 0 0; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; padding: 24px 0 48px; gap: 36px; }
+    .grid, .steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="logo" href="./">
+      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#e5484d"/><circle cx="11" cy="15" r="3.2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="21" cy="15" r="3.2" fill="none" stroke="#fff" stroke-width="2"/><path d="M8 23h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      Tapedeck
+    </a>
+    <a class="gh" href="https://github.com/songbachhoang/tapedeck">GitHub →</a>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <h1>Save YouTube audio and video on your Mac.</h1>
+      <p class="lede">One click from any video. Best quality, playlists you pick from, and no ads or pop-ups, ever. Tapedeck runs on your own computer, so nothing is uploaded anywhere.</p>
+      <div class="install">
+        <code><span class="p">$ </span><span id="cmd">brew install songbachhoang/tap/tapedeck</span></code>
+        <button class="copy" id="copy" type="button">Copy</button>
+      </div>
+      <p class="then">Then run <code>tapedeck</code>. Free and open source. Needs <a href="https://brew.sh">Homebrew</a>.</p>
+    </div>
+    <img class="shot" src="screenshot.png" width="1520" height="1640"
+         alt="Tapedeck showing a playlist of 17 Blender open movies, each with a checkbox, and a button to download them as a zip">
+  </header>
+
+  <section>
+    <h2>Everything a downloader should do</h2>
+    <div class="grid">
+      <div class="card"><h3>One click from YouTube</h3><p>Drag the Tapedeck button to your bookmarks bar. On any video, click it and the download starts.</p></div>
+      <div class="card"><h3>Best quality</h3><p>Keep the original audio with no re-encoding, or get MP3, M4A, 1080p MP4 or 4K video. Cover art included.</p></div>
+      <div class="card"><h3>Playlists, your pick</h3><p>See every track first, tick the ones you want, and get one tidy, numbered .zip.</p></div>
+      <div class="card"><h3>Fast</h3><p>Downloads three tracks at once, straight from your own connection.</p></div>
+      <div class="card"><h3>Keeps working</h3><p>YouTube changes all the time. Tapedeck updates its download engine, yt-dlp, by itself every day.</p></div>
+      <div class="card"><h3>Private and open source</h3><p>No account, no tracking, no uploads. Read every line on GitHub.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><h3>Install</h3><p>One Homebrew command installs Tapedeck along with ffmpeg and everything else it needs.</p></li>
+      <li><h3>Open</h3><p>Run <code>tapedeck</code>. It opens in your browser, but everything happens on your Mac.</p></li>
+      <li><h3>Download</h3><p>Paste a link or use the one-click button. Your file lands in Downloads.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Questions</h2>
+    <details><summary>Is it free?</summary><p>Yes. Tapedeck is free and open source under the MIT license.</p></details>
+    <details><summary>Why an app and not a website?</summary><p>Download websites are full of ads and fake buttons, and YouTube blocks them often. Tapedeck downloads from your own connection, so it's clean, fast and reliable.</p></details>
+    <details><summary>Does it work on Windows or Linux?</summary><p>Tapedeck is made for macOS. It runs on Linux with Python, ffmpeg and Deno installed. Windows isn't supported yet.</p></details>
+    <details><summary>What can I download?</summary><p>Download videos you own, that are Creative Commons or public domain, or that you have permission to save. Downloading may be against YouTube's Terms of Service, so use Tapedeck responsibly.</p></details>
+  </section>
+
+  <footer>
+    <span>Tapedeck is built on <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> and <a href="https://ffmpeg.org">ffmpeg</a>. Not affiliated with YouTube or Google.</span>
+    <span><a href="https://github.com/songbachhoang/tapedeck">GitHub</a> · MIT License</span>
+  </footer>
+</div>
+<script>
+  document.getElementById("copy").addEventListener("click", async (e) => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById("cmd").textContent);
+      e.target.textContent = "Copied";
+    } catch {
+      e.target.textContent = "Select it ↖";
+    }
+    setTimeout(() => (e.target.textContent = "Copy"), 2000);
+  });
+</script>
+</body>
+</html>
